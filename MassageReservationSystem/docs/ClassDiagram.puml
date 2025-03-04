@@ -1,0 +1,103 @@
+@startuml
+left to right direction
+package "Massage Reservation"{
+    class "<<Application>>\nMassage Reservation" as MassageReservationService{}
+
+    class "<<Resource>>\nReservations" as ResourceReservations{
+        <<GET>> +getReservations():Reservation
+        <<POST>> +createReservation():Reservation
+    }
+
+    class "<<Resource>>\nReservation" as ResourceReservation{
+        <<GET>> +getReservation(): Reservation
+        <<PUT>> +updateReservation(): Reservation
+        <<DELETE>> +deleteReservation(): void
+    }
+
+    class "<<Representation>>\nReservation" as RepresentationReservation {
+        -massageshop_name
+        -reserver_email
+        -reservation_date
+        -reservation_starttime
+        -reservation_endtime
+    }
+
+    class "<<Resource>>\nMassageShops" as ResourceMassageShops{
+        <<GET>> +getMassageShops():MassageShop
+        <<POST>> +createMassageShop():MassageShop
+    }
+
+    class "<<Resource>>\nMassageShop" as ResourceMassageShop{
+        <<GET>> +getMassageShop(): MassageShop
+        <<PUT>> +updateMassageShop(): MassageShop
+        <<DELETE>> +deleteMassageShop(): void
+    }
+
+    class "<<Representation>>\nMassageShop" as RepresentationMassageShop {
+        -name
+        -address
+        -district
+        -province
+        -tel
+        -open_time
+        -close_time
+    }
+
+    class "<<Resource>>\nUser" as ResourceUser{
+        
+    }
+
+    class "<<Resource>>\nRegister" as ResourceRegister{
+        <<POST>> +register(): Token
+    }
+
+    class "<<Resource>>\nLogin" as ResourceLogin{
+        <<POST>> +login(): Token
+    }
+
+     class "<<Resource>>\nChangeInfo" as ResourceChangeInfo{
+        <<PATCH>> +updateUser(): void
+    }
+
+    class "<<Resource>>\nChangePassword" as ResourceChangePassword{
+        <<PATCH>> +changePassword(): Token
+    }
+
+    class "<<Resource>>\nLogout" as ResourceLogout{
+        <<GET>> +logout(): void
+    }
+
+    class "<<Resource>>\nMe" as ResourceMe{
+        <<GET>> +getMe(): User
+    }
+
+    class "<<Representation>>\nUser" as RepresentationUser {
+        -name
+        -email
+        -role
+        -tel
+        -password
+    }
+
+}
+
+MassageReservationService ..> ResourceUser:"/user\n<<Path>>"
+ResourceUser ..> ResourceRegister:"/register\n<<Path>>"
+ResourceRegister ..> RepresentationUser: "<<use>>"
+ResourceUser ..> ResourceLogin:"/login\n<<Path>>"
+ResourceLogin ..> RepresentationUser: "<<use>>"
+ResourceUser ..> ResourceChangeInfo:"/change-info\n<<Path>>"
+ResourceChangeInfo..> RepresentationUser: "<<use>>"
+ResourceUser ..> ResourceChangePassword:"/change-password\n<<Path>>"
+ResourceChangePassword ..> RepresentationUser: "<<use>>"
+ResourceUser ..> ResourceMe:"/me\n<<Path>>"
+ResourceMe ..> RepresentationUser: "<<use>>"
+ResourceUser ..> ResourceLogout:"/logout\n<<Path>>"
+MassageReservationService ..> ResourceMassageShops:"/massageshop\n<<Path>>"
+ResourceMassageShops ..> ResourceMassageShop:"/{massageshopId}\n<<Path>>"
+ResourceMassageShop ..> RepresentationMassageShop: "<<use>>"
+MassageReservationService ..> ResourceReservations:"/reservation\n<<Path>>"
+ResourceReservations ..> ResourceReservation:"/{reservationId}\n<<Path>>"
+ResourceReservation ..> RepresentationReservation: "<<use>>"
+
+@enduml
