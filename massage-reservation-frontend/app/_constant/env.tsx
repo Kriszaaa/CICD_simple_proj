@@ -1,1 +1,1 @@
-export const API_URL = 'http://localhost:5000/api/v1'
+export const API_URL = 'http://backend-massage-service.default.svc.cluster.local:5000/api/v1'

@@ -7,6 +7,9 @@ import { useState } from 'react';
 import { register } from '@/lib/userlib';
 
 export default function Register(){
+    // return (
+    //     <div></div>
+    // )
     const user_roles = ["admin", "user"]
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-massage-deployment
+  labels:
+    app: massage-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: business-logic
+  template:
+    metadata:
+      labels:
+        app: business-logic
+    spec:
+
+      containers:
+      - name: massage-backend
+        image: massage-reservation-backend:1.0
+        ports:
+        - containerPort: 5000
